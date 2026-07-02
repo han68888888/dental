@@ -369,6 +369,7 @@ section[id] { scroll-margin-top: 90px; }
   color: var(--white);
 }
 .trust-card--years span { color: rgba(255,255,255,0.65); }
+.trust-card--accent-overlay { top: 8%; right: 2% !important; z-index: 4; }
 
 .hero__scroll {
   display: none;
