@@ -704,6 +704,7 @@ section[id] { scroll-margin-top: 90px; }
 .testimonial-card__author strong { display: block; font-size: 0.95rem; }
 .testimonial-card__author span { font-size: 0.82rem; color: var(--muted); }
 
+.testimonials { padding-bottom: clamp(40px, 5vw, 70px); }
 .testimonials__nav { display: flex; gap: 12px; margin-top: 30px; }
 .testimonials__nav button {
   width: 46px; height: 46px;
@@ -717,6 +718,7 @@ section[id] { scroll-margin-top: 90px; }
 /* ==========================================================================
    FAQ
    ========================================================================== */
+.faq { padding-top: clamp(40px, 5vw, 70px); }
 .faq__inner { max-width: 880px; }
 .faq-item {
   border-bottom: 1px solid rgba(36,20,23,0.1);
