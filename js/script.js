@@ -4,7 +4,7 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------------------------------------------------------
-     Smooth in-page navigation (fixed navbar offset via
+     Smooth in-page navigation (fixed header offset via
      scroll-margin-top on each section)
   --------------------------------------------------------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -19,18 +19,18 @@
   });
 
   /* ---------------------------------------------------------
-     Navbar: blur/shadow on scroll
+     Header: blur/shadow on scroll
   --------------------------------------------------------- */
-  var navbar = document.getElementById("navbar");
-  function onScrollNav() {
+  var header = document.getElementById("siteHeader");
+  function onScrollHeader() {
     if (window.scrollY > 40) {
-      navbar.classList.add("is-scrolled");
+      header.classList.add("is-scrolled");
     } else {
-      navbar.classList.remove("is-scrolled");
+      header.classList.remove("is-scrolled");
     }
   }
-  window.addEventListener("scroll", onScrollNav, { passive: true });
-  onScrollNav();
+  window.addEventListener("scroll", onScrollHeader, { passive: true });
+  onScrollHeader();
 
   /* ---------------------------------------------------------
      Mobile navigation
@@ -88,7 +88,7 @@
   /* ---------------------------------------------------------
      Animated counters
   --------------------------------------------------------- */
-  var metricEls = document.querySelectorAll(".metric__value");
+  var statEls = document.querySelectorAll(".stat__value");
   function formatCount(value, decimals) {
     return value.toLocaleString("en-US", {
       minimumFractionDigits: decimals,
@@ -115,34 +115,34 @@
     }
     requestAnimationFrame(step);
   }
-  if ("IntersectionObserver" in window && metricEls.length) {
-    var metricObserver = new IntersectionObserver(
+  if ("IntersectionObserver" in window && statEls.length) {
+    var statObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             animateCounter(entry.target);
-            metricObserver.unobserve(entry.target);
+            statObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.4 }
     );
-    metricEls.forEach(function (el) { metricObserver.observe(el); });
+    statEls.forEach(function (el) { statObserver.observe(el); });
   }
 
   /* ---------------------------------------------------------
-     Before / After slider
+     Before / After compare slider
   --------------------------------------------------------- */
-  var baRange = document.getElementById("baRange");
-  var baBefore = document.getElementById("baBefore");
-  var baHandle = document.getElementById("baHandle");
+  var compareRange = document.getElementById("compareRange");
+  var compareBefore = document.getElementById("compareBefore");
+  var compareHandle = document.getElementById("compareHandle");
   function updateSlider(value) {
-    baBefore.style.clipPath = "inset(0 " + (100 - value) + "% 0 0)";
-    baHandle.style.left = value + "%";
+    compareBefore.style.clipPath = "inset(0 " + (100 - value) + "% 0 0)";
+    compareHandle.style.left = value + "%";
   }
-  if (baRange) {
-    updateSlider(baRange.value);
-    baRange.addEventListener("input", function () { updateSlider(this.value); });
+  if (compareRange) {
+    updateSlider(compareRange.value);
+    compareRange.addEventListener("input", function () { updateSlider(this.value); });
   }
 
   /* ---------------------------------------------------------
@@ -158,19 +158,46 @@
   });
 
   /* ---------------------------------------------------------
-     Testimonials carousel
+     Patient stories — single-story spotlight carousel
   --------------------------------------------------------- */
-  var track = document.getElementById("testiTrack");
-  var prevBtn = document.getElementById("testiPrev");
-  var nextBtn = document.getElementById("testiNext");
-  function scrollTestimonials(dir) {
-    var card = track.querySelector(".testimonial-card");
-    if (!card) return;
-    var amount = card.getBoundingClientRect().width + 26;
-    track.scrollBy({ left: dir * amount, behavior: reduceMotion ? "auto" : "smooth" });
+  var stories = Array.prototype.slice.call(document.querySelectorAll(".story"));
+  var storyPhoto = document.getElementById("storyPhoto");
+  var storyPrev = document.getElementById("storyPrev");
+  var storyNext = document.getElementById("storyNext");
+  var storyIndex = stories.findIndex(function (s) { return s.classList.contains("is-active"); });
+  if (storyIndex < 0) storyIndex = 0;
+
+  function showStory(index) {
+    stories.forEach(function (s) { s.classList.remove("is-active"); });
+    stories[index].classList.add("is-active");
+    if (storyPhoto) storyPhoto.src = stories[index].getAttribute("data-photo");
   }
-  if (prevBtn && nextBtn) {
-    prevBtn.addEventListener("click", function () { scrollTestimonials(-1); });
-    nextBtn.addEventListener("click", function () { scrollTestimonials(1); });
+  if (stories.length && storyPrev && storyNext) {
+    storyPrev.addEventListener("click", function () {
+      storyIndex = (storyIndex - 1 + stories.length) % stories.length;
+      showStory(storyIndex);
+    });
+    storyNext.addEventListener("click", function () {
+      storyIndex = (storyIndex + 1) % stories.length;
+      showStory(storyIndex);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Appointment form (static demo — no backend wired up)
+  --------------------------------------------------------- */
+  var apptForm = document.getElementById("appointmentForm");
+  if (apptForm) {
+    apptForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!apptForm.checkValidity()) {
+        apptForm.reportValidity();
+        return;
+      }
+      var firstName = document.getElementById("apptName").value.trim().split(" ")[0];
+      document.getElementById("apptSuccess").textContent =
+        "Thank you, " + firstName + "! We'll call you shortly to confirm your appointment.";
+      apptForm.reset();
+    });
   }
 })();

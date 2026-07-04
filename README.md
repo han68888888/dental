@@ -1,11 +1,12 @@
-# Aurelia Dental Studio
+# Sumanth Dental Specialists
 
-A premium, luxury dental clinic website built with pure HTML, CSS, and Vanilla JavaScript.
+A premium, luxury multi-specialty dental clinic website (Koramangala, Bengaluru) built with pure HTML, CSS, and Vanilla JavaScript.
 
 ## Features
 
 - **Responsive Design** — Works perfectly on mobile, tablet, and desktop
-- **Luxury Aesthetic** — Burgundy & gold color scheme with elegant typography (Fraunces & Inter)
+- **Luxury Aesthetic** — Clay & sage color scheme with elegant typography (DM Serif Display & Manrope), custom SVG logo mark
+- **Trust Signals** — NABH-standard protocols, no-cost EMI options, Google rating, animated metrics
 - **Interactive Elements**
   - Smooth scroll navigation with blur navbar
   - Mobile hamburger menu (fixed positioning bug resolved)
@@ -91,4 +92,4 @@ Simply copy all files to your web host. Works on any HTTP server.
 
 ## License
 
-© 2026 Aurelia Dental Studio. All rights reserved.
+© 2026 Sumanth Dental Specialists. All rights reserved.
