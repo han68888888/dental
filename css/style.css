@@ -487,7 +487,7 @@ section[id] { scroll-margin-top: 90px; }
   gap: clamp(40px, 6vw, 100px);
   align-items: center;
 }
-.why__visual { position: relative; }
+.why__visual { position: relative; aspect-ratio: 1/1; }
 .why__ring {
   position: absolute;
   width: 130%; height: 130%;
@@ -500,8 +500,14 @@ section[id] { scroll-margin-top: 90px; }
 .why__frame { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); z-index: 1; }
 .why__frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease); }
 .why__frame:hover img { transform: scale(1.06); }
-.why__frame--main { width: 78%; aspect-ratio: 4/5; }
-.why__frame--main img { object-position: center 30%; }
+.why__frame--main {
+  position: absolute;
+  width: 112%; aspect-ratio: 1/1;
+  top: 50%; left: 46%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+.why__frame--main img { object-position: center 40%; }
 .why__frame--accent {
   position: absolute;
   right: -6%; bottom: -10%;
